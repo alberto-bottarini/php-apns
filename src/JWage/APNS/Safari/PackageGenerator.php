@@ -22,6 +22,11 @@ class PackageGenerator
      * @var string
      */
     protected $host;
+    
+    /**
+     * @var string
+     */
+    protected $prefix;
 
     /**
      * @var string
@@ -46,12 +51,14 @@ class PackageGenerator
         Certificate $certificate,
         $basePushPackagePath,
         $host,
+        $prefix = '',
         $websiteName = '',
         $websitePushId = ''
     ) {
         $this->certificate = $certificate;
         $this->basePushPackagePath = $basePushPackagePath;
         $this->host = $host;
+        $this->prefix = $prefix;
         $this->websiteName = $websiteName;
         $this->websitePushId = $websitePushId;
     }
@@ -125,6 +132,7 @@ class PackageGenerator
                 $websiteJson = file_get_contents($filePath);
                 $websiteJson = str_replace('{{ userId }}', $package->getUserId(), $websiteJson);
                 $websiteJson = str_replace('{{ host }}', $this->host, $websiteJson);
+                $websiteJson = str_replace('{{ prefix }}', $this->prefix, $websiteJson);
                 $websiteJson = str_replace('{{ websiteName }}', $this->websiteName, $websiteJson);
                 $websiteJson = str_replace('{{ websitePushId }}', $this->websitePushId, $websiteJson);
                 file_put_contents($filePath, $websiteJson);
